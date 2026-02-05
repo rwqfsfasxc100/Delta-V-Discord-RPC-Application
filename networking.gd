@@ -28,8 +28,8 @@ func create_server():
 	peer.create_server(DEFAULT_PORT,MAX_CONNECTIONS)
 	get_tree().set_network_peer(peer)
 
-remote func set_icon(ship,do_update = false):
-	ActivityController.set_icon(ship,do_update)
+remote func set_icon(ship,force_this_icon = false,do_update = false):
+	ActivityController.set_icon(ship,force_this_icon,do_update)
 
 remote func set_icon_text(text,do_update = false):
 	ActivityController.set_icon_text(text,do_update)
