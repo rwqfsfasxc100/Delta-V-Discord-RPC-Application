@@ -38,21 +38,24 @@ var unknown_icon = icons["unknown"]
 
 
 
-func set_icon(ship,do_update = false):
-	var icon = fallback_icon
-	var list = icons["ships"]
-	if ship in list:
-		icon = list[ship]
+func set_icon(ship,force_this_icon = false,do_update = false):
+	var icon = ""
+	if force_this_icon:
+		icon = ship
 	else:
-		match ship.to_lower():
-			"icon":
-				icon = "icon"
-			"empty":
-				icon = "empty"
-			"ep","enceladus","enceladus_prime":
-				icon = "enceladus_prime"
-			"unknown":
-				icon = "unknown"
+		var list = icons["ships"]
+		if ship in list:
+			icon = list[ship]
+		else:
+			match ship.to_lower():
+				"icon":
+					icon = "icon"
+				"empty":
+					icon = "empty"
+				"ep","enceladus","enceladus_prime":
+					icon = "enceladus_prime"
+				"unknown":
+					icon = "unknown"
 	current_large_icon = icon
 	
 	if do_update:
