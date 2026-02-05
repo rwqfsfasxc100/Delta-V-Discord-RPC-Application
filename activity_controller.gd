@@ -96,8 +96,9 @@ func set_end_timer(time = 0,do_update = false):
 		emit_signal("update_activity")
 
 func set_state(text,do_update = false):
+	if text == current_details:
+		text = ""
 	current_state = text
-	
 	if do_update:
 		emit_signal("update_activity")
 
