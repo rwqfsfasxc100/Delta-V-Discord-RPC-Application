@@ -96,8 +96,6 @@ func set_end_timer(time = 0,do_update = false):
 		emit_signal("update_activity")
 
 func set_state(text,do_update = false):
-	if text == current_details:
-		text = ""
 	current_state = text
 	if do_update:
 		emit_signal("update_activity")
@@ -139,9 +137,13 @@ func _ready():
 var activity_status_str = "DV RPC: %s on %s"
 
 func update_activity() -> void:
+	var st = current_state
+	var dt = current_details
+	if st == dt:
+		st = ""
 	activity.set_type(Discord.ActivityType.Playing)
-	activity.set_state(current_state)
-	activity.set_details(current_details)
+	activity.set_state(st)
+	activity.set_details(dt)
 
 	var assets = activity.get_assets()
 	assets.set_large_image(current_large_icon)
