@@ -35,7 +35,7 @@ var fallback_icon = icons["empty"]
 var unknown_icon = icons["unknown"]
 
 
-
+var changed = false
 
 
 func set_icon(ship,force_this_icon = false,do_update = false):
@@ -56,58 +56,82 @@ func set_icon(ship,force_this_icon = false,do_update = false):
 					icon = "enceladus_prime"
 				"unknown":
 					icon = "unknown"
-	current_large_icon = icon
-	
-	if do_update:
-		emit_signal("update_activity")
+	if icon != current_large_icon:
+		print("Changing large icon text from %s to %s" % [current_large_text,icon])
+		current_large_icon = icon
+		changed = true
+		if do_update:
+			emit_signal("update_activity")
 
 func set_icon_text(text,do_update = false):
-	current_large_text = text
-	
-	if do_update:
-		emit_signal("update_activity")
+	if text != current_large_text:
+		print("Changing large icon from %s to %s" % [current_large_icon,text])
+		current_large_text = text
+		changed = true
+		if do_update:
+			emit_signal("update_activity")
 	
 
 func set_small_icon_text(text,do_update = false):
-	current_small_text = text
-	
-	if do_update:
-		emit_signal("update_activity")
+	if text != current_small_text:
+		print("Changing small icon text from %s to %s" % [current_small_text,text])
+		current_small_text = text
+		changed = true
+		if do_update:
+			emit_signal("update_activity")
 
-func set_small_icon(how,do_update = false):
+func set_small_icon(how,force_this_icon = false,do_update = false):
 	var icon = "None"
-	if how:
-		icon = icons["icon"]
-	current_small_icon = icon
-	
-	if do_update:
-		emit_signal("update_activity")
+	if force_this_icon:
+		icon = how
+	else:
+		if how:
+			icon = icons["icon"]
+	if icon != current_small_icon:
+		print("Changing small icon from %s to %s" % [current_small_icon,icon])
+		current_small_icon = icon
+		changed = true
+		if do_update:
+			emit_signal("update_activity")
 
 func set_start_timer(time = OS.get_unix_time(),do_update = false):
-	start_timer = time
-	
-	if do_update:
-		emit_signal("update_activity")
+	if time != start_timer:
+		print("Changing start time from %s to %s" % [str(end_timer),str(time)])
+		start_timer = time
+		changed = true
+		if do_update:
+			emit_signal("update_activity")
 
 func set_end_timer(time = 0,do_update = false):
-	end_timer = time
-	
-	if do_update:
-		emit_signal("update_activity")
+	if time != end_timer:
+		print("Changing end time from %s to %s" % [str(end_timer),str(time)])
+		end_timer = time
+		changed = true
+		if do_update:
+			emit_signal("update_activity")
 
 func set_state(text,do_update = false):
-	current_state = text
-	if do_update:
-		emit_signal("update_activity")
+	if text != current_state:
+		print("Changing state from %s to %s" % [current_state,text])
+		current_state = text
+		changed = true
+		if do_update:
+			emit_signal("update_activity")
 
 func set_details(text,do_update = false):
-	current_details = text
-	
-	if do_update:
-		emit_signal("update_activity")
+	if text != current_details:
+		print("Changing details from %s to %s" % [current_details,text])
+		current_details = text
+		changed = true
+		if do_update:
+			emit_signal("update_activity")
 
 func update_rpc():
-	emit_signal("update_activity")
+	if changed:
+		print("Updating RPC due to unsent changes")
+		emit_signal("update_activity")
+		changed = false
+		
 
 
 
