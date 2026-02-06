@@ -13,7 +13,8 @@ func _ready():
 	create_server()
 	get_tree().connect("network_peer_disconnected",self,"_disconnected")
 
-func _disconnected():
+func _disconnected(how):
+	print("Client %s disconnected" % how)
 	ActivityController.set_icon("unknown")
 	ActivityController.set_state("Disconnected")
 	ActivityController.set_details("Waiting on game response...")
@@ -37,8 +38,8 @@ remote func set_icon_text(text,do_update = false):
 remote func set_small_icon_text(text,do_update = false):
 	ActivityController.set_small_icon_text(text,do_update)
 
-remote func set_small_icon(how,do_update = false):
-	ActivityController.set_small_icon(how,do_update)
+remote func set_small_icon(how,force_this_icon = false,do_update = false):
+	ActivityController.set_small_icon(how,force_this_icon,do_update)
 
 remote func set_start_timer(time = OS.get_unix_time(),do_update = false):
 	ActivityController.set_start_timer(time,do_update)
